@@ -1,14 +1,14 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Button, Form, FormGroup, Label, Input, Card, CardBody, CardHeader, FormFeedback } from 'reactstrap'
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function Login() {
 
 
   const initialForm = {
-    ad: '',
-    soyad: '',
     email: '',
     password: '',
     terms: false,
@@ -17,6 +17,8 @@ export default function Login() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     validate();
@@ -56,7 +58,10 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(form);
+    
+    if (isValid) {
+      navigate('/success');
+    }
   };
 
   return (
@@ -64,7 +69,7 @@ export default function Login() {
     <Card>
       <CardHeader>Kayıt ol</CardHeader>
     <CardBody>
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <FormGroup>
         <Label for="email">
           Email
